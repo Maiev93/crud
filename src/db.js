@@ -7,4 +7,7 @@ export const DATABASE = {
       return this._users;
     }
   },
+  setUser: function (user) {
+    this._users.push(user)
+  },
 };

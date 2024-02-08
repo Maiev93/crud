@@ -1,18 +1,37 @@
-import uuid from "uuid";
-import ROUTES from "./api";
-import DATABASE from "./db";
-
-// POST api/users используется для создания записи о новом пользователе и сохранения ее в базе данных.
-// Сервер должен ответить status code 201 и вновь созданной записью.
-// Сервер должен ответить status code 400 и соответствующим сообщением, если запрос body не содержит обязательных полей.
-
-// id— уникальный идентификатор ( string, uuid), сгенерированный на стороне сервера
-// username— имя пользователя ( string, обязательно )
-// age— возраст пользователя ( number, обязательно )
-// hobbies— хобби пользователя ( arrayили stringsпусто array, обязательно )
+import { v4 as uuidv4 } from "uuid";
+import { DATABASE } from "./db.js";
 
 export const handlerPost = function (request, response) {
-const condition = Object.hasOwn(request.body, 'username') && Object.hasOwn(request.body, 'age') && Object.hasOwn(request.body, 'hobbies')
-    
-    if (condition) { request.body } 
-}
+  let body = "";
+  // use raw/JSON body in postman
+  request.on("data", function (data) {
+    body = JSON.parse(data.toString());
+    console.log("DATA", body, typeof body);
+  });
+
+  request.on("end", function () {
+    const condition =
+      Object.hasOwn(body, "username") &&
+      Object.hasOwn(body, "age") &&
+      Object.hasOwn(body, "hobbies");
+
+    if (condition) {
+      body = {
+        id: uuidv4(),
+        ...body,
+      };
+
+      DATABASE.setUser(body);
+      response.statusCode = 201;
+      response.writeHead(201, { "Content-Type": "application/json" });
+      response.write(JSON.stringify(body));
+      response.end();
+    } else {
+      response.statusCode = 400;
+      response.write(
+        "Incorrect user data. You should send username, age and hobby (type Array)"
+      );
+      response.end();
+    }
+  });
+};

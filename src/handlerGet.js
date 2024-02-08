@@ -1,4 +1,4 @@
-import { v4 as uuidv4, validate } from "uuid";
+import { validate } from "uuid";
 import dotenv from "dotenv";
 import { ROUTES } from "./api.js";
 import { DATABASE } from "./db.js";

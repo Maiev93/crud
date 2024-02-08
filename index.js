@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import http from "http";
 import { handlerGet } from './src/handlerGet.js'
+import {handlerPost} from './src/handlerPost.js'
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ server.on("request", (request, response) => {
       break;
 
     case "POST":
+      handlerPost(request, response)
       break;
 
     case "PUT":
