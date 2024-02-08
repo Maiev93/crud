@@ -6,14 +6,15 @@ export const handlerPost = function (request, response) {
   // use raw/JSON body in postman
   request.on("data", function (data) {
     body = JSON.parse(data.toString());
-    console.log("DATA", body, typeof body);
   });
 
   request.on("end", function () {
     const condition =
       Object.hasOwn(body, "username") &&
       Object.hasOwn(body, "age") &&
-      Object.hasOwn(body, "hobbies");
+      Object.hasOwn(body, "hobbies") &&
+      Array.isArray(body.hobbies) &&
+      Number.isInteger(body.age);
 
     if (condition) {
       body = {
@@ -29,7 +30,7 @@ export const handlerPost = function (request, response) {
     } else {
       response.statusCode = 400;
       response.write(
-        "Incorrect user data. You should send username, age and hobby (type Array)"
+        "Incorrect user data. You should send username, age (type Number) and hobby (type Array)"
       );
       response.end();
     }

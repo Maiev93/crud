@@ -12,7 +12,6 @@ export const handlerGet = function (request, response) {
     console.log("The request made is:", request.url);
   }
   const currentID = request.url.split("/")[3];
-  console.log(currentID);
   
   switch (request.url) {
     case `/${BASE_URL}${ROUTES.USERS}`:
@@ -23,7 +22,6 @@ export const handlerGet = function (request, response) {
       break;
 
     case `/${BASE_URL}${ROUTES.USERS}/${currentID}`:
-      console.log(currentID);
       if (!validate(currentID)) {
         response.statuscode = 400;
         response.write("Id is not correct. Uuid is required");
@@ -44,7 +42,8 @@ export const handlerGet = function (request, response) {
       break;
 
     default:
-      response.statusCode = 400;
+      response.statusCode = 404;
+      response.write("Not avaliable endpoint");
       response.end();
   }
 };

@@ -1,7 +1,9 @@
 import dotenv from "dotenv";
 import http from "http";
+import { ROUTES } from "./src/api.js";
 import { handlerGet } from './src/handlerGet.js'
-import {handlerPost} from './src/handlerPost.js'
+import { handlerPost } from './src/handlerPost.js'
+import {handlerPut} from './src/handlePut.js'
 
 dotenv.config();
 
@@ -19,10 +21,18 @@ server.on("request", (request, response) => {
       break;
 
     case "POST":
-      handlerPost(request, response)
+      if (request.url === `/${BASE_URL}${ROUTES.USERS}`) {
+        handlerPost(request, response)
+      } else {
+        response.statusCode = 404;
+        response.write("Not avaliable endpoint");
+        response.end();
+      }
+      
       break;
 
     case "PUT":
+      handlerPut(request, response)
       break;
 
     case "DELETE":

@@ -10,4 +10,15 @@ export const DATABASE = {
   setUser: function (user) {
     this._users.push(user)
   },
+  changeUser: function (currentUser) {
+    this._users.forEach(function (user) {
+      console.log(user, currentUser);
+      if (user.id === currentUser.id) {
+        console.log(user.hobbies, currentUser.hobbies);
+        user.username = currentUser.name
+        user.age = currentUser.age
+        user.hobbies = currentUser.hobbies
+      }
+    })
+  },
 };
