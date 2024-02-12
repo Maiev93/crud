@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "nodemon index.js",
+    "start:prod": "webpack --config webpack.config.cjs && nodemon dist/bundle.cjs"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,9 @@
     "dotenv": "^16.4.1",
     "nodemon": "^3.0.3",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4"
   }
 }

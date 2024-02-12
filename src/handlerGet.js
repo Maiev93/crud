@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import { ROUTES } from "./api.js";
 import { DATABASE } from "./db.js";
 
-
 dotenv.config();
 const BASE_URL = process.env.BASE_URL;
 
@@ -12,7 +11,7 @@ export const handlerGet = function (request, response) {
     console.log("The request made is:", request.url);
   }
   const currentID = request.url.split("/")[3];
-  
+
   switch (request.url) {
     case `/${BASE_URL}${ROUTES.USERS}`:
       response.statusCode = 200;

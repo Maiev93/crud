@@ -8,17 +8,19 @@ export const DATABASE = {
     }
   },
   setUser: function (user) {
-    this._users.push(user)
+    this._users.push(user);
   },
   changeUser: function (currentUser) {
     this._users.forEach(function (user) {
-      console.log(user, currentUser);
       if (user.id === currentUser.id) {
-        console.log(user.hobbies, currentUser.hobbies);
-        user.username = currentUser.name
-        user.age = currentUser.age
-        user.hobbies = currentUser.hobbies
+        user.username = currentUser.name;
+        user.age = currentUser.age;
+        user.hobbies = currentUser.hobbies;
       }
-    })
+    });
+  },
+  deleteUser: function (id) {
+    const deletedID = this._users.findIndex((user) => user.id === id);
+    this._users.splice(deletedID, 1);
   },
 };
